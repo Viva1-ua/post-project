@@ -2,22 +2,34 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+class Field(models.Model):
+    field = models.CharField(max_length=55, unique=True)
+
+    class Meta:
+        ordering = ["field", ]
+        verbose_name = "Field"
+
+
 class Topic(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.ForeignKey(
+        "Field",
+        max_length=55,
+        unique=True,
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ["name", ]
-        verbose_name = "Topics"
+        verbose_name = "Topic"
 
 
 class Post(models.Model):
     topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
     content = models.TextField()
     publisher = models.ForeignKey("User", on_delete=models.CASCADE)
-    comments = models.ManyToManyField("Commentary", blank=True, related_name="comments")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -25,7 +37,7 @@ class Post(models.Model):
 
     class Meta:
         ordering = ["-created_at", "topic", ]
-        verbose_name = "Posts"
+        verbose_name = "Post"
 
 
 class Commentary(models.Model):
@@ -39,7 +51,7 @@ class Commentary(models.Model):
 
     class Meta:
         ordering = ["created_at"]
-        verbose_name = "Commentarys"
+        verbose_name = "Commentarie"
 
 
 class User(AbstractUser):
@@ -49,7 +61,7 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ["username", ]
-        verbose_name = "Users"
+        verbose_name = "User"
 
 
 class Followers(models.Model):
@@ -64,4 +76,4 @@ class Followers(models.Model):
     )
 
     class Meta:
-        verbose_name = "Followers"
+        verbose_name = "Follower"
