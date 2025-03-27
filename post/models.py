@@ -3,20 +3,24 @@ from django.db import models
 
 
 class Field(models.Model):
-    field = models.CharField(max_length=55, unique=True)
+    name = models.CharField(max_length=55, unique=True)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
-        ordering = ["field", ]
+        ordering = ["name", ]
         verbose_name = "Field"
 
 
 class Topic(models.Model):
-    name = models.ForeignKey(
+    field = models.ForeignKey(
         "Field",
         max_length=55,
-        unique=True,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        default=None,
     )
+    name = models.CharField(max_length=55, unique=True)
 
     def __str__(self):
         return self.name
@@ -27,7 +31,8 @@ class Topic(models.Model):
 
 
 class Post(models.Model):
-    topic = models.ForeignKey("Topic", on_delete=models.CASCADE)
+    field = models.ForeignKey("Topic", on_delete=models.CASCADE, related_name="posts", blank=True, null=True)
+    topic = models.TextField(max_length=55, blank=True)
     content = models.TextField()
     publisher = models.ForeignKey("User", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -41,7 +46,7 @@ class Post(models.Model):
 
 
 class Commentary(models.Model):
-    post = models.ForeignKey("Post", on_delete=models.CASCADE, related_name="post")
+    post = models.ForeignKey("Post", on_delete=models.CASCADE, related_name="commentary")
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
     author = models.ForeignKey("User", on_delete=models.CASCADE)

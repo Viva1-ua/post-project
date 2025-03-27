@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 
-from post.models import Commentary, Post, User, Followers, Topic
+from post.models import (Post, User,
+                         Topic, Field)
+
+
+admin.site.register(Field)
+admin.site.unregister(Group)
 
 
 @admin.register(Topic)
@@ -16,21 +22,8 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ("topic", "publisher", )
 
 
-@admin.register(Commentary)
-class CommentaryAdmin(admin.ModelAdmin):
-    list_display = ("author", "post", "created_at", )
-    search_fields = ("author", "post", )
-
-
 @admin.register(User)
 class UserAdmin(UserAdmin):
     list_display = ("username", "email", "date_joined", )
     search_fields = ("username", )
     list_filter = ("email", "date_joined", )
-
-
-@admin.register(Followers)
-class FollowersAdmin(admin.ModelAdmin):
-    list_display = ("user", "followers", )
-
-
