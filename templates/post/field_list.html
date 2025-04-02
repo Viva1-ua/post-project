@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Fields of interest that you might be interesting in</h2>
+  
+  {% if field_list %}
+  	<ul>
+      {% for field in field_list %}
+        <li><a href="{% url "post:field-detail" pk=field.id %}">{{ field.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %} 
+{% endblock %}

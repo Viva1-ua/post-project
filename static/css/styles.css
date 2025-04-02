@@ -1,0 +1,14 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.content-nav {
+    margin: 50px;
+    padding: 0;
+}
+
+.logout-form {
+    background: none;
+    padding: 0;
+    border: 0;
+}

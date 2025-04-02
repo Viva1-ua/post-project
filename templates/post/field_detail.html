@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Title: {{ field.name }}</h2>
+  {% for field in field.post.all %}
+  	<p>{{ field }}</p>
+  {% empty %}
+    <p>No posts!</p>
+  {% endfor %}
+  
+{% endblock %}
