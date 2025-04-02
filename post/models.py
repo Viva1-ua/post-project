@@ -15,9 +15,28 @@ class Field(models.Model):
         verbose_name = "Field"
 
 
-class Post(models.Model):
+class Section(models.Model):
     field = models.ForeignKey(
-        "Field", on_delete=models.CASCADE, related_name="posts", blank=True, null=True
+        "Field",
+        max_length=55,
+        on_delete=models.CASCADE,
+        default=None,
+    )
+    name = models.CharField(max_length=55, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = [
+            "name",
+        ]
+        verbose_name = "Section"
+
+
+class Post(models.Model):
+    section = models.ForeignKey(
+        "Section", on_delete=models.CASCADE, related_name="posts", blank=True, null=True
     )
     subtext = models.TextField(max_length=55, blank=True)
     content = models.TextField()

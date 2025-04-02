@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h2>Title: {{ field.name }}</h2>
-  {% for field in field.post.all %}
-  	<p>{{ field }}</p>
-  {% empty %}
-    <p>No posts!</p>
-  {% endfor %}
+	<h2>You have chosen {{ field.name }} as a field of interest.</h2>
+  <h4></h4>
+  <ul>
+    {% for post in field.posts.all %}
+      <li>
+        <p>
+          <a href="">{{ post.subtext }}</a>
+        </p>
+      </li>
+    {% empty %}
+      <p>No posts!</p>
+    {% endfor %}
+  </ul>
   
 {% endblock %}
