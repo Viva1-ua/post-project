@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>You are on {{ section.name }} section</h1>
+  {% for post in section.posts.all %}
+    <ul>
+      <li><a href="{% url "post:post-detail" pk=post.pk %}"><strong>{{ post.title }}</strong></a>
+        <ul>by {{ post.publisher }}</ul>
+      </li>
+    </ul>
+  {% empty %}
+    <p>No posts for this section</p>
+  {% endfor %}
+
+{% endblock %}

@@ -38,13 +38,13 @@ class Post(models.Model):
     section = models.ForeignKey(
         "Section", on_delete=models.CASCADE, related_name="posts", blank=True, null=True
     )
-    subtext = models.TextField(max_length=55, blank=True)
+    title = models.TextField(blank=True)
     content = models.TextField()
     publisher = models.ForeignKey("User", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.subtext
+        return self.title
 
     class Meta:
         ordering = [

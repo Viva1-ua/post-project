@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h1>{{ post.title }}</h1>
+  <br>
+  <h3>by {{ post.publisher }}</h3>
+  <h6>{{ post.created_at }}</h6>
+
+  <hr>
+  <p>{{ post.content }}</p>
+
+  {% if commentary %}
+  	{% for comment in commentary %}
+  		<p>Hello</p>
+    {% empty %}
+      <p>No commentaries under this post!</p>
+  	{% endfor %}
+
+  {% endif %}
+
+{% endblock %}

@@ -5,14 +5,15 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from post.models import Post, User, Field
+from post.models import Post, User, Field, Section
 
 
 @login_required
 def index(request: HttpRequest) -> HttpResponse:
     context = {
-        "num_field": Post.objects.all().count(),
+        "num_field": Field.objects.count(),
         "num_users": User.objects.count(),
+        "num_posts": Post.objects.count(),
     }
 
     return render(request, "post/index.html", context=context)
@@ -26,3 +27,11 @@ class FieldListView(generic.ListView):
 
 class FieldDetailView(generic.DetailView):
     model = Field
+
+
+class SectionDetailView(generic.DetailView):
+    model = Section
+
+
+class PostDetailView(generic.DetailView):
+    model = Post

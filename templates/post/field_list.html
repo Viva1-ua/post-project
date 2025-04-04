@@ -7,8 +7,15 @@
   {% if field_list %}
   	<ul>
       {% for field in field_list %}
-        <li><a href="{% url "post:field-detail" pk=field.id %}">{{ field.name }}</a></li>
+        <li>{{ field.name }}</li>
+        <ul>
+          {% for section in field.section_set.all %}
+            <li><a href="{% url "post:section-detail" pk=section.id %}">{{ section.name }}</a></li>
+          {% empty %}
+            <p>No sections in this field.</p>
+          {% endfor %}
+        </ul>
       {% endfor %}
     </ul>
-  {% endif %} 
+  {% endif %}
 {% endblock %}
