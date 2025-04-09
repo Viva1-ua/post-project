@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
+{% block title %}
+	<title>Section {{ section.name }}</title>
+{% endblock %}
+
 {% block content %}
-  <h1>You are on {{ section.name }} section</h1>
+  <h1>You are on {{ section.name }} section  <a href="{% url "post:post-create" %}">+</a></h1>
   {% for post in section.posts.all %}
     <ul>
       <li><a href="{% url "post:post-detail" pk=post.pk %}"><strong>{{ post.title }}</strong></a>

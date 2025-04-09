@@ -6,7 +6,7 @@
     <li class="nav-link">
       <form method="post" action="{% url "logout" %}">
         {% csrf_token %}
-        <button type="submit">Log out</button>
+        <button class="btn btn-primary" type="submit">Log out</button>
       </form>
     </li>
   {% else %}
@@ -27,6 +27,6 @@
     <a href="{% url "post:field-list" %}">Fields of interest</a>
   </li>
   <li class="nav-link">
-    <a href="">All posts</a>
+    <a href="">My posts</a>
   </li>
 </ul>

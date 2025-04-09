@@ -1,36 +1,46 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
 
-{% block content %}
+{% block title %}
+	<title>{{ post.title }}</title>
+{% endblock %}
 
+{% block content %}
 	<h1>{{ post.title }}</h1>
+  <br>
+  {% if user == post.publisher %}
+    <a class="btn btn-primary" href="{% url "post:post-update" pk=post.pk %}">Update</a>
+    <a class="btn btn-danger" href="{% url "post:post-delete" pk=post.pk %}">Delete</a>
+  {% endif %} 
   <br>
   <h3>posted by {{ post.publisher }}</h3>
   <h6>{{ post.created_at }}</h6>
 
   <hr>
-  <p>{{ post.content }}</p>
+  <br>
+  <p>{{ post.content|linebreaks }}</p>
+  <br>
 
   <br>
-  {% if post.commentary.all %}
-    <p>{{ post.commentary.count }} comment{{ post.commentary.count|pluralize }} under this post.</p>
-    <ul>
-      {% for comment in post.commentary.all %}
-        <p>{{ comment.author }}</p>
-        <ul>
-          <p>{{ comment.content }}</p>
-        </ul>
-      {% empty %}
-      <p>No commentaries under this post!</p>
-      {% endfor %}
-    </ul>
-  {% endif %} 
+  <p>{{ post.commentary.count }} comment{{ post.commentary.count|pluralize }} under this post.</p>
+  <ul>
+    {% for comment in post.commentary.all %}
+      <ul>
+        <li>
+          <p><strong>{{ comment.author }}</strong> {{ comment.created_at }}</p>
+          <p>{{ comment.content|linebreaks }}</p>
+        </li>
+      </ul>
+    {% empty %}
+    <p>No commentaries under this post!</p>
+    {% endfor %}
+  </ul>
   {% if user.is_authenticated %}
-  	<form action="" method="post">
+  	<form action="" method="post" novalidate>
       {% csrf_token %}
       {{ form|crispy }}
-      <input type="submit" value="Add comment">
+      <input type="submit" value="Add comment" class="btn btn-primary">
     </form>
   {% endif %}
-  
+
 {% endblock %}
