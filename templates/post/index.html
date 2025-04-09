@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Welcome to Mazanka Website</h1>
+  <h1>Welcome to our website</h1>
   <p>
   On this website we want you to be open-minded to new fields of interest and feel free in what 
   you are already fond of doing.
@@ -15,7 +15,7 @@
   <ul>
     <li><strong><a href="{% url "post:field-list" %}">Fields: </a></strong> {{ num_field }}</li>
     <li><strong>All users:</strong> {{ num_users }}</li>
-    <li><strong><a href="">All posts</a> {{ num_posts }}</strong></li>
+    <li><strong><a href="{% url "" %}">All your posts:</a></strong> {{ num_posts }}</li>
     <li></li>
   </ul>
 {% endblock %}
