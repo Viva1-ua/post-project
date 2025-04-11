@@ -3,7 +3,8 @@ from post.views import index, PostCreateView, PostUpdateView
 
 from post.views import (FieldListView, FieldDetailView,
                         PostDetailView, SectionDetailView,
-                        PostDeleteView, PublisherPostListView)
+                        PostDeleteView, PublisherPostListView,
+                        UserAccountListView)
 
 
 app_name = "post"
@@ -17,5 +18,6 @@ urlpatterns = [
     path("post/create/", PostCreateView.as_view(), name="post-create"),
     path("post/update/<int:pk>/", PostUpdateView.as_view(), name="post-update"),
     path("post/delete/<int:pk>/", PostDeleteView.as_view(), name="post-delete"),
-    path("post/my-posts/", PublisherPostListView.as_view(), name="publisher-post-list"),
+    path("post/publisher-posts/", PublisherPostListView.as_view(), name="publisher-post-list"),
+    path("post/user-account/<int:pk>/", UserAccountListView.as_view(), name="user-account-list"),
 ]

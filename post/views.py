@@ -16,7 +16,7 @@ def index(request: HttpRequest) -> HttpResponse:
     context = {
         "num_field": Field.objects.count(),
         "num_users": User.objects.count(),
-        "num_posts": Post.objects.count(),
+        "num_posts": Post.objects.filter(publisher=request.user).count(),
     }
 
     return render(request, "post/index.html", context=context)
@@ -96,3 +96,12 @@ class PublisherPostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     success_url = reverse_lazy("post:publisher-post-list")
     template_name = "post/publisher_post_list.html"
+    context_object_name = "publisher_posts"
+
+    def get_queryset(self):
+        return Post.objects.filter(publisher=self.request.user)
+
+
+class UserAccountListView(LoginRequiredMixin, generic.ListView):
+    model = User
+
