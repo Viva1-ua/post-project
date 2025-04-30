@@ -1,0 +1,96 @@
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+
+class Field(models.Model):
+    name = models.CharField(max_length=55, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = [
+            "name",
+        ]
+        verbose_name = "Field"
+
+
+class Section(models.Model):
+    field = models.ForeignKey(
+        "Field",
+        max_length=55,
+        on_delete=models.CASCADE,
+        default=None,
+    )
+    name = models.CharField(max_length=55, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = [
+            "name",
+        ]
+        verbose_name = "Section"
+
+
+class Post(models.Model):
+    section = models.ForeignKey(
+        "Section", on_delete=models.CASCADE, related_name="posts", blank=True, null=True
+    )
+    title = models.TextField(blank=True)
+    content = models.TextField()
+    publisher = models.ForeignKey("User", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = [
+            "-created_at",
+        ]
+        verbose_name = "Post"
+
+
+class Commentary(models.Model):
+    post = models.ForeignKey(
+        "Post", on_delete=models.CASCADE, related_name="commentary"
+    )
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+    author = models.ForeignKey("User", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        ordering = ["created_at"]
+        verbose_name = "Commentarie"
+
+
+class User(AbstractUser):
+
+    def __str__(self):
+        return self.username
+
+    class Meta:
+        ordering = [
+            "username",
+        ]
+        verbose_name = "User"
+
+
+class Followers(models.Model):
+    followers = models.ForeignKey(
+        "User", on_delete=models.CASCADE, related_name="followers"
+    )
+    user = models.ForeignKey(
+        "User",
+        on_delete=models.CASCADE,
+        related_name="following_user",
+        verbose_name="Following",
+    )
+
+    class Meta:
+        verbose_name = "Follower"

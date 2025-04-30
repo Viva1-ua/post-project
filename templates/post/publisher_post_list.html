@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title>My posts</title>
+{% endblock %}
+
+{% block content %}
+  
+  <h1>Hello {{ user }}</h1>
+  <p>You have in total {{ publisher_posts.count }} post{{ publisher_posts.count|pluralize }}</p>
+  
+  {% if publisher_posts %}
+    <ul>
+      {% for publish in publisher_posts %}
+        <li>
+          <p><a href="{% url "post:post-detail" pk=publish.pk %}">{{ publish.title }}</a></p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %} 
+{% endblock %}

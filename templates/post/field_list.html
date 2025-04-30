@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title>Fields of interest</title>
+{% endblock %}
+
+{% block content %}
+	<h2>Fields of interest that you might be interesting in</h2>
+  
+  {% if field_list %}
+  	<ul>
+      {% for field in field_list %}
+        <li>{{ field.name }}</li>
+        <ul>
+          {% for section in field.section_set.all %}
+            <li><a href="{% url "post:section-detail" pk=section.id %}">{{ section.name }}</a></li>
+          {% empty %}
+            <p>No sections in this field.</p>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

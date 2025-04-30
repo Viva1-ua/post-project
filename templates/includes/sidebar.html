@@ -1,0 +1,32 @@
+<ul>
+  {% if user.is_authenticated %}
+    <li class="nav-link">
+  	  User: {{ user.username }}
+    </li>
+    <li class="nav-link">
+      <form method="post" action="{% url "logout" %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">Log out</button>
+      </form>
+    </li>
+  {% else %}
+    <li class="nav-link">
+      <a href="{% url "login" %}">Log in</a>
+    </li>
+  {% endif %}
+
+<br>
+
+  <li class="nav-link">
+    <a href="{% url "post:home-page" %}">Home</a>
+  </li>
+  <li class="nav-link">
+    <a href="">Follows</a>
+  </li>
+  <li class="nav-link">
+    <a href="{% url "post:field-list" %}">Fields of interest</a>
+  </li>
+  <li class="nav-link">
+    <a href="{% url "post:publisher-post-list" %}">My posts</a>
+  </li>
+</ul>

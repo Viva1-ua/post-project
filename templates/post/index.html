@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title>Home page</title>
+{% endblock %}
+
+{% block content %}
+  <h1>Welcome to our website</h1>
+  <p>
+  On this website we want you to be open-minded to new fields of interest and feel free in what 
+  you are already fond of doing.
+  </p>
+  <h2>Content of our website</h2>
+  <p>This website contain those records:</p>
+  <ul>
+    <li><strong><a href="{% url "post:field-list" %}">Fields: </a></strong> {{ num_field }}</li>
+    <li><strong>All users:</strong> {{ num_users }}</li>
+    <li><strong><a href="{% url "post:publisher-post-list" %}">All your posts:</a></strong> {{ num_posts }}</li>
+    <li></li>
+  </ul>
+{% endblock %}
